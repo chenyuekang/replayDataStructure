@@ -229,8 +229,8 @@ int dynamicArrayDeleteAppointPosData(dynamicArray *pArray, int pos)
 /* 动态数组删除指定的元素 */
 int dynamicArrayDeleteAppointData(dynamicArray *pArray, ELEMENTTYPE val)
 {
-#if 0
-     int idx = 0; 
+#if 0    
+     int idx = 0;        //错误写法
      for(idx; idx < pArray->len; idx++)
      {
         if(val == pArray->data[idx])
@@ -299,3 +299,24 @@ int dynamicArrayGetCapacity(dynamicArray *pArray, int *pCapacity)
     return ON_SUCCESS;
 }
     
+/* 获取指定位置的元素数据 */
+int dynamicArrayGetAppointPosVal(dynamicArray *pArray, int pos, ELEMENTTYPE *pVal)
+{
+    /*判空*/
+    if(pArray == NULL)
+    {
+        return NULL_PTR;
+    }
+    /*判断位置的合法性*/
+    if(pos < 0 || pos >= pArray->len)
+    {
+        return INVALID_ACCESS;
+    }
+
+    if(pVal)
+    {
+        *pVal =  pArray->data[pos];
+    }
+    return ON_SUCCESS;
+
+}

@@ -77,8 +77,8 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
     /*清除脏数据*/
     memset(newNode, 0, sizeof(LinkNode) * 1);
 
-#if 1
-
+#if 0
+    newNode
 #endif
     /*赋值*/
     newNode->data = val;
@@ -155,6 +155,29 @@ int LinkListdestory(LinkList * pList)
 /*链表遍历接口*/
 int LinkListForeach(LinkList * pList)
 {
-    
+    int ret = 0;
+    if(pList == NULL)
+    {
+        return NULL_PTR;
+    }
 
+#if 0
+    /*travelNode指向虚拟头结点*/
+    LinkNode * travelNode = pList->head;
+    while(travelNode->next != NULL)
+    {
+        travelNode = travelNode->next;
+        printf("travelNode->data:%d\n", travelNode->data);
+    }
+#else
+    /*travelNode指向链表第一个元素*/
+    LinkNode * travelNode = pList->head->next;
+    while(travelNode != NULL)
+    {
+        travelNode = travelNode->next;
+        printf("travelNode->data:%d\n", travelNode->data);
+        travelNode = travelNode->next;
+    }
+#endif
+    return ret;  
 }

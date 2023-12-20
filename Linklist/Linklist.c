@@ -1,5 +1,6 @@
 #include "LinkList.h"
 #include <stdlib.h>
+#include <string.h>
 
 
 /*状态码*/

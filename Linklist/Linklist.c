@@ -81,7 +81,8 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
     memset(newNode, 0, sizeof(LinkNode) * 1);
 
 #if 0
-    newNode
+    newNode->data = 0;
+    newNode->next = NULL;
 #endif
     /*赋值*/
     newNode->data = val;
@@ -100,8 +101,8 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
         /*修改结点指向*/
         travelNode = pList->tail;
     #if 0
-        newNode->next = travelNode->next;
-        travelNode->next = newNode;
+        newNode->next = travelNode->next;     //1
+        travelNode->next = newNode;           //2
     #endif
         flag = 1;
     }
@@ -114,8 +115,8 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
         }
     }
     /*修改结点指向*/
-    newNode->next = travelNode->next;
-    travelNode->next = newNode;
+    newNode->next = travelNode->next;         //1
+    travelNode->next = newNode;               //2
     if(flag)
     {
         /*尾指针更新位置*/
@@ -127,24 +128,60 @@ int LinkListAppointPosInsert(LinkList * pList, int pos, ELEMENTTYPE val)
 
     return ret;
 
-
 }
 
 /*链表头删*/
 int LinkListHeadDel(LinkList * pList)
 {
-
+    return LinkListDelAppointPos(pList, 1);
 }
 
 /*链表尾删*/
 int LinkListTailDel(LinkList * pList)
 {
-
+    return LinkListDelAppointPos(pList, pList->len);
 }
 
 /*链表指定位置删*/
 int LinkListDelAppointPos(LinkList * pList, int pos)
 {
+    int ret = 0;
+    if(pList == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    if(pos <= 0 || pos > pList->len)
+    {
+        return INVALID_ACCESS;
+    }
+
+#if 1
+    LinkNode * travelNode = pList->head;
+#else
+    LinkNode * travelNode = pList->head->next;
+#endif
+
+    while(--pos)        //先自减，然后再进行判断
+    {
+        /*向后移动位置*/
+        travelNode = travelNode->next;    
+    }
+    /*跳出循环找到的是哪一个结点？*/
+    LinkNode * needDelNode = travelNode->next;
+    travelNode->next = needDelNode->next;
+
+    /*释放内存*/
+    if(needDelNode != NULL)
+    {
+        free(needDelNode);
+        needDelNode = NULL;
+    }
+     
+    /*链表长度减一*/
+    (pList->len)--;
+    return ret;
+
 
 }
 
